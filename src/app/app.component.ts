@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from "./user/user.component";
 import { DUMMY_USERS } from './dummy-users';
+import { TasksComponent } from "./tasks/tasks.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, UserComponent],
+  imports: [RouterOutlet, HeaderComponent, UserComponent, TasksComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   
@@ -15,9 +16,14 @@ import { DUMMY_USERS } from './dummy-users';
 export class AppComponent {
   title = 'first-angular-app';
   users=DUMMY_USERS
-
+  selectedUserId?:string;
+  get selectedUserName()
+  {
+    console.log(this.selectedUserId);
+    return this.users.find(x=>x.id===this.selectedUserId)?.name;
+  }
   onSelectUser(id:string)
   {
-    console.log(id)
+    this.selectedUserId=id;
   }
 }
