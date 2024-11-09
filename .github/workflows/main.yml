@@ -3,7 +3,7 @@ name: Build and Publish Angular App
 on:
   push:
     branches:
-      - main  # Trigger this workflow on pushes to the main branch
+      - main  # Trigger the workflow on push to the main branch
   pull_request:
     branches:
       - main  # Trigger the workflow for PRs targeting the main branch
@@ -13,27 +13,36 @@ jobs:
     runs-on: self-hosted  # Use the latest Ubuntu runner
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
+      # Step 2: Set up Node.js (ensure compatibility with Angular 15 or 16)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Set the Node.js version to use
+          node-version: '16'  # Make sure Node.js 16 is used (Angular 15/16 support LTS Node)
 
-      # Step 3: Install dependencies
+      # Step 3: Cache npm dependencies to speed up build
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: |
           npm install  # Install npm dependencies
 
-      # Step 4: Build the Angular app for production
+      # Step 5: Build the Angular project for production
       - name: Build the Angular app
         run: |
           ng build --prod  # Build the app for production
 
-      # Step 5: Publish the build artifact
+      # Step 6: Publish build artifacts
       - name: Publish artifact
         uses: actions/upload-artifact@v3
         with:
