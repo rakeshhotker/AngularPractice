@@ -17,13 +17,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js (ensure compatibility with Angular 15 or 16)
+      # Step 2: Set up Node.js (Node 18.x)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'  # Make sure Node.js 16 is used (Angular 15/16 support LTS Node)
+          node-version: '18'  # Use Node.js 18.x
 
-      # Step 3: Cache npm dependencies to speed up build
+      # Step 3: Cache npm dependencies
       - name: Cache npm dependencies
         uses: actions/cache@v3
         with:
@@ -37,10 +37,10 @@ jobs:
         run: |
           npm install  # Install npm dependencies
 
-      # Step 5: Build the Angular project for production
+      # Step 5: Build the Angular app for production (updated flag)
       - name: Build the Angular app
         run: |
-          ng build --prod  # Build the app for production
+          ng build --configuration production  # Correct flag for production build
 
       # Step 6: Publish build artifacts
       - name: Publish artifact
