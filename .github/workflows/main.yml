@@ -1,0 +1,41 @@
+name: Build and Publish Angular App
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger the workflow for PRs targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Set the Node.js version to use
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install  # Install npm dependencies
+
+      # Step 4: Build the Angular app for production
+      - name: Build the Angular app
+        run: |
+          ng build --prod  # Build the app for production
+
+      # Step 5: Publish the build artifact
+      - name: Publish artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: angular-build  # Name for the artifact
+          path: ./dist/my-angular-app  # Path to the build output folder
