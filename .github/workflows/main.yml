@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Make sure Node.js 16 is used (Angular 15/16 support LTS Node)
+          node-version: '18.x'  # Make sure Node.js 16 is used (Angular 15/16 support LTS Node)
 
       # Step 3: Cache npm dependencies to speed up build
       - name: Cache npm dependencies
