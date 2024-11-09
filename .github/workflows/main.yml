@@ -61,7 +61,12 @@ jobs:
               "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
             }
 
-      # Step 8: Deploy to Azure Web App
+      # Step 8: Verify Azure CLI installation
+      - name: Verify Azure CLI installation
+        run: |
+          az --version  # Verify Azure CLI is available
+
+      # Step 9: Deploy to Azure Web App
       - name: Deploy to Azure Web App
         run: |
           # Create a zip of the build folder
