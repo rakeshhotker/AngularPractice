@@ -47,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: angular-build  # Name for the artifact
-          path: ./dist/my-angular-app  # Path to the build output folder
+          path: ./dist/first-angular-app  # Path to the build output folder
